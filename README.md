@@ -30,8 +30,3 @@ This is a RESTful API built using Node.js and Express.js for an E-commerce platf
 - **Helmet & CORS** – Security enhancements  
 - **Payment Gateway** – Integration for handling transactions  
 
-## 📌 Setup & Installation  
-1. Clone the repository:  
-   ```sh
-   git clone https://github.com/your-repo-link.git
-   cd your-project-folder
