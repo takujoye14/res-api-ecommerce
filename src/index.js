@@ -2,6 +2,8 @@ const express = require('express');
 const app = express();
 const port = 3000;
 const userRoutes = require("./routes/users");
+
+app.use(express.json());
 // app.get('/', (req, res) => {
 //     res.send('Hello World!');
 // });
@@ -38,6 +40,7 @@ const userRoutes = require("./routes/users");
 
 // ROUTES
 app.use("/api/users", userRoutes);
+
 
 
 app.listen(port, () => {
