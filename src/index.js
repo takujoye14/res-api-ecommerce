@@ -3,8 +3,15 @@ const app = express();
 const port = 3000;
 const userRoutes = require("./routes/users");
 const connectDB = require("./utils/db");
+const path = require("path")
 
 app.use(express.json());
+
+
+
+
+
+
 
 connectDB();
 app.use("/api/users", userRoutes);
@@ -18,6 +25,8 @@ app.use((req, res, next) => {
     )
     next()
 });
+
+app.use("/uploads", express.static(path.join(__dirname, "uploads")))
 
 app.get("/", (req, res) => {
     res.send("Home page")
