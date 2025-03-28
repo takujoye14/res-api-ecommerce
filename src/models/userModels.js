@@ -23,17 +23,19 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    role: {
-        type: String,
-        required: true,
+    role: { 
+        type: String, 
+        required: true, 
+        enum: ['user', 'admin'], default: 'user' 
     },
-    inventory: {
-        type: Array,
-        required: true,
-    },
+
+    inventory: [{ 
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'Product' }],
+
 },
 {timestamps:true}
 );
 
 userSchema.plugin(uniqueValidator);
-module.exports = mongoose.model("userSchema", userSchema);
+module.exports = mongoose.model("User", userSchema);

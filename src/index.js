@@ -4,17 +4,16 @@ const port = 3000;
 const userRoutes = require("./routes/users");
 const connectDB = require("./utils/db");
 const path = require("path")
-
+const productRoutes = require("./routes/products");
+const invoicesRoutes = require("./routes/invoices");
 app.use(express.json());
-
-
-
-
 
 
 
 connectDB();
 app.use("/api/users", userRoutes);
+app.use("/api/products", productRoutes);
+app.use("/api/invoices", invoicesRoutes);
 
 // cors middleware
 app.use((req, res, next) => {
