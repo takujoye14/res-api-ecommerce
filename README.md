@@ -1,9 +1,14 @@
-E-Commerce API Guide
-Step-by-step usage:
-1. Create a User (Sign-Up):
-Send a POST request to the signup endpoint (/api/users/signup).
+E-Commerce API Documentation
 
-Provide necessary fields such as:
+Getting Started
+
+Follow these steps to manage users, products, and invoices via the provided API.
+
+1. Create a User (Sign-Up)
+
+Endpoint: POST /api/users/signup
+
+Required fields:
 
 First Name
 
@@ -15,21 +20,29 @@ Password
 
 Role (admin or user)
 
-Image (optional, as file upload)
+Image (optional file upload)
 
-2. Login the User:
-Send a POST request to the login endpoint (/api/users/login).
+2. User Login
 
-Provide your email and password.
+Endpoint: POST /api/users/login
 
-Receive a token in response.
+Provide:
 
-3. Add a Product (Admin Only):
-Ensure you log in as an admin user.
+Email
 
-Use your authentication token in the request header (Bearer Token).
+Password
 
-Send a POST request to (/api/products/addProduct) with product details:
+You will receive an authentication token.
+
+3. Add a Product (Admin only)
+
+Endpoint: POST /api/products/addProduct
+
+Headers:
+
+Authorization: Bearer YOUR_TOKEN
+
+Required fields:
 
 Product Name
 
@@ -45,36 +58,43 @@ Stock quantity
 
 Image (file upload)
 
-4. Retrieve all Products:
-Send a GET request to (/api/products/allproducts) to view all products.
+4. Retrieve All Products (Public)
 
-No authentication required (public access).
+Endpoint: GET /api/products/allproducts
 
-5. Create an Invoice (User):
-Log in as a regular user (non-admin).
+5. Create an Invoice (User only)
 
-Use your token in the request header (Bearer Token).
+Endpoint: POST /api/invoices/addInvoice
 
-Send a POST request to (/api/invoices/addInvoice) with details:
+Headers:
 
-Products (provide the exact product names)
+Authorization: Bearer YOUR_TOKEN
 
-Quantity for each product
+Required fields:
 
-The system automatically calculates the total price.
+Products (specify product names)
 
-6. View Your Invoices:
-Send a GET request to (/api/invoices/myInvoices).
+Quantity of each product
 
-Use your token for authentication.
+Total price is calculated automatically.
 
-You'll receive a detailed list of your invoices, including:
+6. Retrieve Your Invoices (User only)
 
-Invoice ID
+Endpoint: GET /api/invoices/myInvoices
 
-Purchased products (with product names and quantities)
+Headers:
+
+Authorization: Bearer YOUR_TOKEN
+
+Response includes:
+
+Invoice details
+
+Product names
+
+Quantities
 
 Total price
 
-Date created
+Creation date
 
