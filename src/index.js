@@ -14,7 +14,6 @@ connectDB();
 app.use("/api/users", userRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/invoices", invoicesRoutes);
-
 // cors middleware
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*")
