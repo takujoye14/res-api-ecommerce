@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const uniqueValidator = require("mongoose-unique-validator");
+const { array } = require("../middleware/multerConfig");
 
 const productSchema = new mongoose.Schema({
     productName: {

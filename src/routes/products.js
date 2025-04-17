@@ -1,22 +1,28 @@
 const express = require("express");
 const router = express.Router();
 const { verifyToken } = require("../middleware/auth");
-const roleMiddleware = require("../middleware/roleMiddleware");
+const roleMiddleware = require("../middleware/rolemiddleware");
 const upload = require("../middleware/multerConfig");
 const sharpMiddleware = require("../middleware/sharpMiddleware");
-const { getAllProducts, AddProducts } = require("../controllers/productControllers");
+const { getAllProducts, AddProducts, deleteProduct} = require("../controllers/productControllers");
 
-// Route to get all products
-router.get("/allproducts", getAllProducts);
 
-// Route to add a new product (admin only)
+router.get('/allproducts', verifyToken, getAllProducts)
+
 router.post(
-  "/addProduct",
+  '/addProduct',
   verifyToken,
   roleMiddleware(['admin']),
-  upload.single("image"),
-  sharpMiddleware(),
+  upload.array('images'),         
+  sharpMiddleware(),                
   AddProducts
-);
+)
 
+
+router.delete(
+  "/delete/:id",
+  verifyToken,
+  roleMiddleware(["admin"]),
+  deleteProduct
+);
 module.exports = router;

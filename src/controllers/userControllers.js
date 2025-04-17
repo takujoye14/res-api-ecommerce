@@ -48,6 +48,6 @@ exports.userSignUp = async (req, res) => {
         const savedUser = await newUser.save()
         res.status(201).json({firstName: savedUser.firstName, email: savedUser.email, role: savedUser.role,})
     } catch (err) {
-        res.status(400).json({message: err.message,})
+        res.status(400).json({message: "User already exists",})
     }
 }

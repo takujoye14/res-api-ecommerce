@@ -8,13 +8,16 @@ const productRoutes = require("./routes/products");
 const invoicesRoutes = require("./routes/invoices");
 app.use(express.json());
 
+const cors = require("cors");
+app.use(cors());
 
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 connectDB();
 app.use("/api/users", userRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/invoices", invoicesRoutes);
-// cors middleware
+
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*")
     res.header(
@@ -33,4 +36,5 @@ app.get("/", (req, res) => {
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
 });
+
 
