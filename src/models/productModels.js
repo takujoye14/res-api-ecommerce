@@ -9,7 +9,7 @@ const productSchema = new mongoose.Schema({
     },
     category: {
         type: String,
-        required: true,
+        required: false,
     },
     brand:{ 
         type: String,
@@ -29,7 +29,7 @@ const productSchema = new mongoose.Schema({
     },
     stock: {
         type: Number,
-        required: true,
+        required: false,
     },
 }, { timestamps:true });
 
