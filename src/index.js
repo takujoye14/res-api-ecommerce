@@ -9,8 +9,14 @@ const invoicesRoutes = require("./routes/invoices");
 app.use(express.json());
 
 const cors = require("cors");
-app.use(cors());
 
+app.use(cors({
+    origin: ['https://solesupply.netlify.app'],
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+  }))
+  
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 connectDB();
@@ -19,12 +25,8 @@ app.use("/api/products", productRoutes);
 app.use("/api/invoices", invoicesRoutes);
 
 
-app.use(cors({
-  origin: ['https://680bb8490ac2c63be90c0600--solesupply.netlify.app'], 
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization']
-}))
+
+
 
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads")))
