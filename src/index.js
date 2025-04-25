@@ -18,14 +18,14 @@ app.use("/api/users", userRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/invoices", invoicesRoutes);
 
-app.use((req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "*")
-    res.header(
-     "Access-Control-Allow-Headers",
-     "Origin, X-Requested-With, Content-Type, Accept, Authorization"
-    )
-    next()
-});
+
+app.use(cors({
+  origin: ['https://680bb8490ac2c63be90c0600--solesupply.netlify.app'], 
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}))
+
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads")))
 
