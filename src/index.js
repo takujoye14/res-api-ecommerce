@@ -3,21 +3,17 @@ const app = express();
 const port = 3000;
 const path = require("path");
 
-const cors = require("cors");
 const connectDB = require("./utils/db");
 const userRoutes = require("./routes/users");
 const productRoutes = require("./routes/products");
 const invoicesRoutes = require("./routes/invoices");
 
+const cors = require("cors")
 app.use(cors({
-  origin: [
-    'https://solesupply.netlify.app',
-    'http://localhost:5173'
-  ],
+  origin: ['https://solesupply.netlify.app'],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  optionsSuccessStatus: 200
+  allowedHeaders: ['Content-Type', 'Authorization']
 }))
 
 app.use(express.json())
