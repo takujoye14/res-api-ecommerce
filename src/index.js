@@ -8,13 +8,15 @@ const userRoutes = require("./routes/users");
 const productRoutes = require("./routes/products");
 const invoicesRoutes = require("./routes/invoices");
 
-const cors = require("cors")
+const cors = require('cors')
+
 app.use(cors({
-  origin: ['https://solesupply.netlify.app'],
+  origin: ['https://the-vaultexclusive.netlify.app/'], 
   credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization']
-}))
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+}));
+
 
 app.use(express.json())
 
