@@ -33,26 +33,32 @@ exports.userLogin = async (req, res) => {
 
 
 exports.userSignUp = async (req, res) => {    
-    const { firstName, email, lastName, imageUrl, role} = req.body;
+    console.log('Received body:', req.body);
+    console.log('Hashed password:', req.hashedPassword);
+
+    const { firstName, email, lastName, imageUrl, role } = req.body;
     const hashedPassword = req.hashedPassword;
+
     try {
         const newUser = new User({
             firstName,
             lastName,
             email,
-            password:hashedPassword,
+            password: hashedPassword,
             imageUrl,
             role,
             inventory: [],
-        })
-        const savedUser = await newUser.save()
-        res.status(201).json({firstName: savedUser.firstName, email: savedUser.email, role: savedUser.role,})
+        });
+
+        const savedUser = await newUser.save();
+        res.status(201).json({ firstName: savedUser.firstName, email: savedUser.email, role: savedUser.role });
     } catch (err) {
-        if (err.code === 11000) { 
+        console.error('Signup error:', err); 
+        if (err.code === 11000) {
             res.status(400).json({ message: "User already exists" });
         } else {
             res.status(500).json({ message: "Server error" });
         }
     }
-    
-}
+};
+
