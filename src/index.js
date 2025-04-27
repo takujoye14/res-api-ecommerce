@@ -8,8 +8,23 @@ const productRoutes = require("./routes/products");
 const invoicesRoutes = require("./routes/invoices");
 app.use(express.json());
 
-const cors = require("cors");
-app.use(cors());
+const cors = require('cors');
+const allowedOrigins = ['https://the-vaultexclusive.netlify.app'];
+
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true, 
+};
+
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
+
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
