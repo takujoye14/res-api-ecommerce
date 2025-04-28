@@ -17,8 +17,10 @@ exports.verifyToken = async (req, res, next) => {
 
     req.userRole = user.role;
     next();
-  } catch (err) {
-    return res.status(401).json({ message: "Unauthorized!" });
-  }
+  }catch (err) {
+      console.error("JWT verification failed:", err);
+      return res.status(401).json({ message: "Invalid or expired token" });
+    }
+    
 };
 
