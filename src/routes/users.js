@@ -10,7 +10,7 @@ router.post("/login", userLogin);
 
 router.post("/signup", hashPassword, userSignUp);
 
-router.put("/userUpdate", verifyToken, upload.single("image"), sharpMiddleware(), (req, res) => {
+router.put("/userUpdate", verifyToken, upload.single("image"), sharpMiddleware, (req, res) => {
   if (!req.file) {
     return res.status(400).json({ error: "File upload error." });
   }
