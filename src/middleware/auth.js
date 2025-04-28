@@ -1,29 +1,27 @@
-const jwt = require("jsonwebtoken");
-const User = require("../models/userModels");
 require('dotenv').config();
+const jwt = require('jsonwebtoken');
 
-exports.verifyToken = async (req, res, next) => {
-  if (!req.headers.authorization) {
-    return res.status(403).send({ message: "No token provided" });
+const verifyToken = (req, res, next) => {
+  const authHeader = req.headers['authorization'];
+
+  if (!authHeader) {
+    return res.status(401).json({ message: 'No token provided' });
   }
+
+  const token = authHeader.split(' ')[1];
+
+  if (!token) {
+    return res.status(401).json({ message: 'Token missing' });
+  }
+
   try {
-    const token = req.headers.authorization.split(" ")[1];
-    const decodedToken = jwt.verify(token, process.env.SECRET_TOKEN_KEY);
-    req.userId = decodedToken.userId;
-    const user = await User.findById(req.userId);
-
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
-    }
-
-    req.userRole = user.role;
+    const decoded = jwt.verify(token, process.env.SECRET_TOKEN_KEY);
+    req.user = decoded;
     next();
-  }catch (err) {
-      console.error("JWT verification failed:", err);
-      return res.status(401).json({ message: "Invalid or expired token" });
-    }
-    
+  } catch (err) {
+    console.error('JWT verification failed:', err.message);
+    return res.status(401).json({ message: 'Invalid or expired token' });
+  }
 };
 
 module.exports = verifyToken;
-
