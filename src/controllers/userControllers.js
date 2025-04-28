@@ -36,10 +36,19 @@ exports.userSignUp = async (req, res) => {
     console.log('Received body:', req.body);
     console.log('Hashed password:', req.hashedPassword);
 
-    const { firstName, email, lastName, imageUrl, role } = req.body;
+    const { firstName, lastName, email, imageUrl, role } = req.body;
     const hashedPassword = req.hashedPassword;
 
+    if (!firstName || !lastName || !email || !hashedPassword) {
+        return res.status(400).json({ message: "Missing required fields" });
+    }
+
     try {
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+            return res.status(400).json({ message: "User already exists" });
+        }
+
         const newUser = new User({
             firstName,
             lastName,
@@ -52,13 +61,10 @@ exports.userSignUp = async (req, res) => {
 
         const savedUser = await newUser.save();
         res.status(201).json({ firstName: savedUser.firstName, email: savedUser.email, role: savedUser.role });
+        
     } catch (err) {
         console.error('Signup error:', err); 
-        if (err.code === 11000) {
-            res.status(400).json({ message: "User already exists" });
-        } else {
-            res.status(500).json({ message: "Server error" });
-        }
+        res.status(500).json({ message: "Server error" });
     }
 };
 
